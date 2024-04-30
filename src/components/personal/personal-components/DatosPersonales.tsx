@@ -30,6 +30,7 @@ export function DatosPersonales({ datosIntroducidos, setDatosIntroducidos, error
                     value={datosIntroducidos.nombre}
                     name="nombre"
                     className="w-full"
+                    placeholder="Nombre(s)"
                     label="Nombre/s"
                     onChange={handleChange}
                     required
@@ -38,7 +39,8 @@ export function DatosPersonales({ datosIntroducidos, setDatosIntroducidos, error
                 <InputBase
                     className="w-full"
                     name="apellidoPaterno"
-                    label="Apellido Paterno"
+                    label="Primer Apellido"
+                    placeholder="Primer Apellido"
                     onChange={handleChange}
                     value={datosIntroducidos.apellidoPaterno}
                     error={errorCampoRequerido !== '' && datosIntroducidos.apellidoPaterno === '' ? errorCampoRequerido : ''}
@@ -47,7 +49,8 @@ export function DatosPersonales({ datosIntroducidos, setDatosIntroducidos, error
                 <InputBase
                     className="w-full"
                     name="apellidoMaterno"
-                    label="Apellido Materno"
+                    label="Segundo Apellido"
+                    placeholder="Segundo Apellido"
                     onChange={handleChange}
                     value={datosIntroducidos.apellidoMaterno}
                     error={errorCampoRequerido !== '' && datosIntroducidos.apellidoMaterno === '' ? errorCampoRequerido : ''}
@@ -55,11 +58,12 @@ export function DatosPersonales({ datosIntroducidos, setDatosIntroducidos, error
                 />
             </div>
 
-            <div className="w-[100%] grid grid-cols-2 mdn:grid-cols-3 gap-5 my-5">
+            <div className="flex flex-col md:flex-row gap-2 py-2">
                 <InputBase
                     name="curp"
-                    className="mdx:col-span-2"
+                    className="w-full"
                     label="CURP"
+                    placeholder='Ej. "AAAA000000AAAAAA00"'
                     onChange={handleChange}
                     value={datosIntroducidos.curp}
                     error={errorCampoRequerido !== '' && datosIntroducidos.curp === '' ? errorCampoRequerido : ''}
@@ -67,7 +71,7 @@ export function DatosPersonales({ datosIntroducidos, setDatosIntroducidos, error
                 />
                 <NativeSelect
                     name="genero"
-                    className="chx:mt-5"
+                    className="w-full"
                     data={['Masculino', 'Femenino']}
                     label="Genero"
                     onChange={handleChange}
@@ -98,10 +102,10 @@ export function DatosPersonales({ datosIntroducidos, setDatosIntroducidos, error
                 </div> */}
             </div>
 
-            <div className="w-[100%] grid grid-cols-2 gap-5 my-5">
+            <div className="flex flex-col md:flex-row gap-2 py-2">
                 <NativeSelect
                     name="nacionalidad"
-                    className=""
+                    className="w-full"
                     value={datosIntroducidos.nacionalidad}
                     data={paises}
                     label="Nacionalidad"
@@ -110,6 +114,7 @@ export function DatosPersonales({ datosIntroducidos, setDatosIntroducidos, error
                 />
                 {datosIntroducidos.nacionalidad === 'México' ? (
                     <NativeSelect
+                        className="w-full"
                         name="lugarNacimiento"
                         data={estados}
                         value={datosIntroducidos.lugarNacimiento}
@@ -119,6 +124,7 @@ export function DatosPersonales({ datosIntroducidos, setDatosIntroducidos, error
                     />
                 ) : (
                     <NativeSelect
+                        className="w-full"
                         name="lugarNacimiento"
                         data={['Extranjero']}
                         label="Lugar de Nacimiento"
@@ -129,8 +135,9 @@ export function DatosPersonales({ datosIntroducidos, setDatosIntroducidos, error
                 )}
             </div>
 
-            <div className={datosIntroducidos.tieneHijos ? 'w-[100%] grid ch:grid-cols-3 gap-5 my-5' : 'w-[100%] grid ch:grid-cols-2 gap-5 my-5'}>
+            <div className={datosIntroducidos.tieneHijos ? 'grid md:grid-cols-3 items-center gap-2 py-2' : 'flex flex-col md:flex-row gap-2 py-2'}>
                 <NativeSelect
+                    className="w-full"
                     data={['Soltero(a)', 'Comprometido(a)', 'Unión Libre', 'Casado(a)', 'Divorciado(a)', 'Viudo(a)']}
                     name="estadoCivil"
                     value={datosIntroducidos.estadoCivil}
@@ -140,7 +147,7 @@ export function DatosPersonales({ datosIntroducidos, setDatosIntroducidos, error
                 />
                 <Switch
                     name="tieneHijos"
-                    className="ch:mt-6 flex justify-center"
+                    className="flex justify-center md:py-6 py-4 w-full"
                     size="lg"
                     label="¿Tienes Hijos?"
                     labelPosition="left"
