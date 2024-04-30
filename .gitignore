@@ -34,3 +34,8 @@ yarn-error.log*
 # typescript
 *.tsbuildinfo
 next-env.d.ts
+
+# Bloqueadores de paquetes de Node.js
+pnpm-lock.yaml
+yarn.lock
+package-lock.json
