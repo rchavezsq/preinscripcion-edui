@@ -1,4 +1,4 @@
-import { DatosMadre, DatosPadre, DatosPersonales } from './personal-components'
+import { DatosContacto, DatosMadre, DatosPadre, DatosPersonales } from './personal-components'
 
 interface Props {
     datosIntroducidos: any
@@ -9,6 +9,7 @@ export function Personal({ datosIntroducidos, updateDatosIntroducidos }: Props) 
     return (
         <div>
             <DatosPersonales datosIntroducidos={datosIntroducidos} errorCampoRequerido="" setDatosIntroducidos={updateDatosIntroducidos} />
+            <DatosContacto datosIntroducidos={datosIntroducidos} errorCampoRequerido="" setDatosIntroducidos={updateDatosIntroducidos} />
             <DatosPadre datosIntroducidos={datosIntroducidos} errorCampoRequerido="" setDatosIntroducidos={updateDatosIntroducidos} />
             <DatosMadre datosIntroducidos={datosIntroducidos} errorCampoRequerido="" setDatosIntroducidos={updateDatosIntroducidos} />
         </div>

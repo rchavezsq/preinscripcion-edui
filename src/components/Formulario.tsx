@@ -18,7 +18,6 @@ export function Formulario() {
 
     return (
         <div className="md:m-10 bg-white md:shadow-xl p-10 rounded-xl">
-            <h1>Formulario</h1>
             <div className="flex justify-end">
                 <button
                     className=" bg-blue-600 w-[8rem] rounded-md p-2 mb-4 text-white"

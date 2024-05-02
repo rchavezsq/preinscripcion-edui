@@ -1,3 +1,5 @@
 export { DatosPersonales } from './DatosPersonales'
 export { DatosPadre } from './DatosPadre'
 export { DatosMadre } from './DatosMadre'
+export { DatosContacto } from './DatosContacto'
+export { PuntosTutor } from './PuntosTutor'

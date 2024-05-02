@@ -135,7 +135,11 @@ export function DatosPersonales({ datosIntroducidos, setDatosIntroducidos, error
                 )}
             </div>
 
-            <div className={datosIntroducidos.tieneHijos ? 'grid md:grid-cols-3 items-center gap-2 py-2' : 'flex flex-col md:flex-row gap-2 py-2'}>
+            <div
+                className={
+                    datosIntroducidos.tieneHijos ? 'grid md:grid-cols-3 items-center gap-2 py-2' : 'flex flex-col md:flex-row gap-2 py-2 items-center'
+                }
+            >
                 <NativeSelect
                     className="w-full"
                     data={['Soltero(a)', 'Comprometido(a)', 'Unión Libre', 'Casado(a)', 'Divorciado(a)', 'Viudo(a)']}
@@ -147,7 +151,7 @@ export function DatosPersonales({ datosIntroducidos, setDatosIntroducidos, error
                 />
                 <Switch
                     name="tieneHijos"
-                    className="flex justify-center md:py-6 py-4 w-full"
+                    className="flex justify-center w-full mt-6"
                     size="lg"
                     label="¿Tienes Hijos?"
                     labelPosition="left"
