@@ -4,13 +4,47 @@ import { StyledStepper } from './StyledStepper'
 import { Personal } from './personal/Personal'
 import { useState } from 'react'
 import { IconCircleCheck } from '@tabler/icons-react'
+import SocioEconomico from './socio-economicos/SocioEconomico'
+import { Familiar } from '@/types/familiar'
 
 export function Formulario() {
     const [pageActive, setPageActive] = useState(0)
     const [datosIntroducidos, setDatosIntroducidos] = useState({})
+    const [familiares, setFamiliares] = useState<any>([])
+
+    const [user, setUser] = useState({
+        id: 1,
+        nombre: 'Juan',
+        apellido: 'Perez',
+    })
 
     const updateDatosIntroducidos = (data: any) => {
         setDatosIntroducidos((prev) => ({ ...prev, ...data }))
+    }
+
+    const agregarFamiliar = (familiar: Familiar) => {
+        setFamiliares((famliares: Familiar[]) => [...familiares, familiar])
+    }
+
+    //Metodo que actualiza los datos de los familiares
+    const setEnLista = (key: string) => {
+        setFamiliares(
+            familiares.map((fam: Familiar) =>
+                fam.key === key
+                    ? {
+                          id_familiar: fam.id_familiar,
+                          id_alumno: fam.id_alumno,
+                          parentesco: fam.parentesco,
+                          nombre: fam.nombre,
+                          edad: fam.edad,
+                          ocupacion: fam.ocupacion,
+                          ingreso: fam.ingreso,
+                          celular: fam.celular,
+                          key: key,
+                      }
+                    : fam
+            )
+        )
     }
 
     const prevStep = () => setPageActive((current) => (current > 0 ? current - 1 : current))
@@ -30,9 +64,19 @@ export function Formulario() {
             </div>
             <StyledStepper active={pageActive} completedIcon={<IconCircleCheck size="1.1rem" />} color="teal" size="sm" iconPosition="right">
                 <Stepper.Step>
-                    <Personal datosIntroducidos={datosIntroducidos} updateDatosIntroducidos={updateDatosIntroducidos} />
+                    <Personal
+                        datosIntroducidos={datosIntroducidos}
+                        updateDatosIntroducidos={updateDatosIntroducidos}
+                        agregarFamiliar={agregarFamiliar}
+                        familiares={familiares}
+                        setEnLista={setEnLista}
+                        setFamiliares={setFamiliares}
+                        user={user}
+                    />
                 </Stepper.Step>
-                <Stepper.Step>Hola</Stepper.Step>
+                <Stepper.Step>
+                    <SocioEconomico datosIntroducidos={datosIntroducidos} handleChange={updateDatosIntroducidos} errorCampoRequerido="" />
+                </Stepper.Step>
                 <Stepper.Step>Hola</Stepper.Step>
                 <Stepper.Step>Hola</Stepper.Step>
             </StyledStepper>

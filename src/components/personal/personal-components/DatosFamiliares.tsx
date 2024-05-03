@@ -1,30 +1,98 @@
+'use client'
 import { useEffect } from 'react'
 
 import { InputBase, Input, NativeSelect, Button } from '@mantine/core'
 import { IMaskInput } from 'react-imask'
-import IconMadrastra from '@/public/icons/madrastra.png'
-import IconPadrastro from '@/public/icons/padrastro.png'
-import IconAbuela from '@/public/icons/abuela.png'
-import IconAbuelo from '@/public/icons/abuelo.png'
-import IconHermano from '@/public/icons/hermano.png'
-import IconHermana from '@/public/icons/hermana.png'
-import IconTio from '@/public/icons/tio.png'
-import IconTia from '@/public/icons/tia.png'
-import IconPrima from '@/public/icons/prima.png'
-import IconPrimo from '@/public/icons/primo.png'
-import IconOtra from '@/public/icons/otra.png'
-import IconOtro from '@/public/icons/otro.png'
+import IconMadrastra from '@/../public/icons/madrastra.png'
+import IconPadrastro from '@/../public/icons/padrastro.png'
+import IconAbuela from '@/../public/icons/abuela.png'
+import IconAbuelo from '@/../public/icons/abuelo.png'
+import IconHermano from '@/../public/icons/hermano.png'
+import IconHermana from '@/../public/icons/hermana.png'
+import IconTio from '@/../public/icons/tio.png'
+import IconTia from '@/../public/icons/tia.png'
+import IconPrima from '@/../public/icons/prima.png'
+import IconPrimo from '@/../public/icons/primo.png'
+import IconOtra from '@/../public/icons/otra.png'
+import IconOtro from '@/../public/icons/otro.png'
 import Image from 'next/image'
 import { ingresos } from '@/libs/datos'
 import { PuntosTutor } from './PuntosTutor'
+import { FamiliarOption } from './FamiliarOption'
+import { Familiar } from '@/types/familiar'
 
 interface Props {
     datosIntroducidos: any
     setDatosIntroducidos: any
     errorCampoRequerido: string
+    familiares: any
+    setFamiliares: any
+    agregarFamiliar: any
+    setEnLista: any
+    user: any
 }
 
-export function DatosFamiliares({ datosIntroducidos, errorCampoRequerido, setDatosIntroducidos }: Props) {
+const FAMILIARES = [
+    {
+        img: IconMadrastra,
+        parentesco: 'Madrastra',
+    },
+    {
+        img: IconPadrastro,
+        parentesco: 'Padrastro',
+    },
+    {
+        img: IconAbuela,
+        parentesco: 'Abuela',
+    },
+    {
+        img: IconAbuelo,
+        parentesco: 'Abuelo',
+    },
+    {
+        img: IconHermano,
+        parentesco: 'Hermano',
+    },
+    {
+        img: IconHermana,
+        parentesco: 'Hermana',
+    },
+    {
+        img: IconTio,
+        parentesco: 'Tio',
+    },
+    {
+        img: IconTia,
+        parentesco: 'Tia',
+    },
+    {
+        img: IconPrima,
+        parentesco: 'Prima',
+    },
+    {
+        img: IconPrimo,
+        parentesco: 'Primo',
+    },
+    {
+        img: IconOtra,
+        parentesco: 'Otra',
+    },
+    {
+        img: IconOtro,
+        parentesco: 'Otro',
+    },
+]
+
+export function DatosFamiliares({
+    datosIntroducidos,
+    errorCampoRequerido,
+    setDatosIntroducidos,
+    agregarFamiliar,
+    familiares,
+    setFamiliares,
+    setEnLista,
+    user,
+}: Props) {
     useEffect(() => {
         if (familiares.length == 0) {
             setDatosIntroducidos({
@@ -34,33 +102,33 @@ export function DatosFamiliares({ datosIntroducidos, errorCampoRequerido, setDat
         }
     }, [familiares])
 
-    const handleChange = (e) => {
-        setDatosIntroducidos({
-            ...datosIntroducidos,
-            [e.target.name]: e.target.value,
-        })
-    }
+    // const handleChange = (e) => {
+    //     setDatosIntroducidos({
+    //         ...datosIntroducidos,
+    //         [e.target.name]: e.target.value,
+    //     })
+    // }
 
     const handleChangeFamiliares = (e) => {
         setFamiliares(
             familiares
-                .filter((fam) => fam.parentesco !== 'Padre')
-                .filter((fam) => fam.parentesco !== 'Madre')
-                .map((familiar) => {})
+                .filter((fam: Familiar) => fam.parentesco !== 'Padre')
+                .filter((fam: Familiar) => fam.parentesco !== 'Madre')
+                .map((familiar: Familiar) => {})
         )
     }
 
-    const eliminarFamiliar = async (key) => {
-        const response = await axios
-            .delete(`${process.env.api}familiares/${key}`)
-            .then((res) => {
-                console.log(res)
-            })
-            .catch((error) => {
-                console.log(error.response.data.message)
-                toast.error(error.response.data.message)
-            })
-    }
+    // const eliminarFamiliar = async (key) => {
+    //     const response = await axios
+    //         .delete(`${process.env.api}familiares/${key}`)
+    //         .then((res) => {
+    //             console.log(res)
+    //         })
+    //         .catch((error) => {
+    //             console.log(error.response.data.message)
+    //             toast.error(error.response.data.message)
+    //         })
+    // }
 
     const getIcon = (parentesco: string) => {
         switch (parentesco) {
@@ -92,12 +160,12 @@ export function DatosFamiliares({ datosIntroducidos, errorCampoRequerido, setDat
     }
 
     const filas = familiares
-        .filter((fam) => fam.parentesco !== 'Padre')
-        .filter((fam) => fam.parentesco !== 'Madre')
-        .map((familiar, i) => (
+        .filter((fam: Familiar) => fam.parentesco !== 'Padre')
+        .filter((fam: Familiar) => fam.parentesco !== 'Madre')
+        .map((familiar: Familiar) => (
             <tr key={familiar.key}>
-                <td>
-                    <Image className="icono" src={getIcon(familiar.parentesco)} alt="icono" width={30} height={30} />
+                <td className="">
+                    <Image className="icono mr-2" src={getIcon(familiar.parentesco)} alt="icono" width={30} height={30} />
                 </td>
 
                 <td>{familiar.parentesco}</td>
@@ -120,7 +188,7 @@ export function DatosFamiliares({ datosIntroducidos, errorCampoRequerido, setDat
                         placeholder="##"
                         value={familiar.edad || ''}
                         error={
-                            errorCampoRequerido !== '' && (familiar.edad === undefined || familiar.edad === '' || familiar.edad == NaN)
+                            errorCampoRequerido !== '' && (familiar.edad === undefined || familiar.edad === 0 || Number.isNaN(familiar.edad))
                                 ? errorCampoRequerido
                                 : ''
                         }
@@ -179,9 +247,9 @@ export function DatosFamiliares({ datosIntroducidos, errorCampoRequerido, setDat
                         variant="outline"
                         color="red"
                         onClick={() => {
-                            eliminarFamiliar(familiar.key)
+                            //?eliminarFamiliar(familiar.key)
                             setFamiliares(
-                                familiares.filter(function (obj) {
+                                familiares.filter(function (obj: Familiar) {
                                     return obj.key !== familiar.key
                                 })
                             )
@@ -199,184 +267,15 @@ export function DatosFamiliares({ datosIntroducidos, errorCampoRequerido, setDat
             <h2 className="my-4 font-bold text-1xl text-center">(SELECCIONAR PERSONAS QUE VIVEN CONTIGO QUE NO SEAN NI TU PAPÁ NI TU MAMÁ)</h2>
 
             <div className="opciones-familiares">
-                <div
-                    className="opcion-familiar"
-                    onClick={() =>
-                        agregarFamiliar({
-                            id_alumno: user.id,
-                            parentesco: 'Madrastra',
-
-                            key: Date.now().toString(),
-                        })
-                    }
-                >
-                    <Image src={IconMadrastra} width={30} height={30} alt="Madrastra" />
-                    <h2>Madrastra</h2>
-                </div>
-
-                <div
-                    className="opcion-familiar"
-                    onClick={() =>
-                        agregarFamiliar({
-                            id_alumno: user.id,
-                            parentesco: 'Padrastro',
-
-                            key: Date.now().toString(),
-                        })
-                    }
-                >
-                    <Image src={IconPadrastro} width={30} height={30} alt="Padrastro" />
-                    <h2>Padrastro</h2>
-                </div>
-
-                <div
-                    className="opcion-familiar"
-                    onClick={() =>
-                        agregarFamiliar({
-                            id_alumno: user.id,
-                            parentesco: 'Abuela',
-
-                            key: Date.now().toString(),
-                        })
-                    }
-                >
-                    <Image src={IconAbuela} width={30} height={30} alt="Abuela" />
-                    <h2>Abuela</h2>
-                </div>
-
-                <div
-                    className="opcion-familiar"
-                    onClick={() =>
-                        agregarFamiliar({
-                            id_alumno: user.id,
-                            parentesco: 'Abuelo',
-
-                            key: Date.now().toString(),
-                        })
-                    }
-                >
-                    <Image src={IconAbuelo} width={30} height={30} alt="Abuelo" />
-                    <h2>Abuelo</h2>
-                </div>
-
-                <div
-                    className="opcion-familiar"
-                    onClick={() =>
-                        agregarFamiliar({
-                            id_alumno: user.id,
-                            parentesco: 'Hermana',
-
-                            key: Date.now().toString(),
-                        })
-                    }
-                >
-                    <Image src={IconHermana} width={30} height={30} alt="Hermana" />
-                    <h2>Hermana</h2>
-                </div>
-
-                <div
-                    className="opcion-familiar"
-                    onClick={() =>
-                        agregarFamiliar({
-                            id_alumno: user.id,
-                            parentesco: 'Hermano',
-
-                            key: Date.now().toString(),
-                        })
-                    }
-                >
-                    <Image src={IconHermano} width={30} height={30} alt="Hermano" />
-                    <h2>Hermano</h2>
-                </div>
-
-                <div
-                    className="opcion-familiar"
-                    onClick={() =>
-                        agregarFamiliar({
-                            id_alumno: user.id,
-                            parentesco: 'Tía',
-
-                            key: Date.now().toString(),
-                        })
-                    }
-                >
-                    <Image src={IconTia} width={30} height={30} alt="Tia" />
-                    <h2>Tía</h2>
-                </div>
-
-                <div
-                    className="opcion-familiar"
-                    onClick={() =>
-                        agregarFamiliar({
-                            id_alumno: user.id,
-                            parentesco: 'Tío',
-
-                            key: Date.now().toString(),
-                        })
-                    }
-                >
-                    <Image src={IconTio} width={30} height={30} alt="Tio" />
-                    <h2>Tío</h2>
-                </div>
-
-                <div
-                    className="opcion-familiar"
-                    onClick={() =>
-                        agregarFamiliar({
-                            id_alumno: user.id,
-                            parentesco: 'Prima',
-
-                            key: Date.now().toString(),
-                        })
-                    }
-                >
-                    <Image src={IconPrima} width={30} height={30} alt="Prima" />
-                    <h2>Prima</h2>
-                </div>
-
-                <div
-                    className="opcion-familiar"
-                    onClick={() =>
-                        agregarFamiliar({
-                            id_alumno: user.id,
-                            parentesco: 'Primo',
-
-                            key: Date.now().toString(),
-                        })
-                    }
-                >
-                    <Image src={IconPrimo} width={30} height={30} alt="Primo" />
-                    <h2>Primo</h2>
-                </div>
-
-                <div
-                    className="opcion-familiar"
-                    onClick={() =>
-                        agregarFamiliar({
-                            id_alumno: user.id,
-                            parentesco: 'Otra',
-
-                            key: Date.now().toString(),
-                        })
-                    }
-                >
-                    <Image src={IconOtra} width={30} height={30} alt="Otra" />
-                    <h2>Otra</h2>
-                </div>
-
-                <div
-                    className="opcion-familiar"
-                    onClick={() =>
-                        agregarFamiliar({
-                            id_alumno: user.id,
-                            parentesco: 'Otro',
-                            key: Date.now().toString(),
-                        })
-                    }
-                >
-                    <Image src={IconOtro} width={30} height={30} alt="Otro" />
-                    <h2>Otro</h2>
-                </div>
+                {FAMILIARES.map((familiar) => (
+                    <FamiliarOption
+                        key={familiar.parentesco}
+                        agregarFamiliar={agregarFamiliar}
+                        user={user}
+                        parentesco={familiar.parentesco}
+                        img={familiar.img}
+                    />
+                ))}
             </div>
 
             <table className="mt-5">
@@ -408,7 +307,7 @@ export function DatosFamiliares({ datosIntroducidos, errorCampoRequerido, setDat
                         Sabiendo todo lo anterior por favor, selecciona al familiar que ejercerá la función de TUTOR
                     </h2>
                     <NativeSelect
-                        data={familiares.map((fam, i) => {
+                        data={familiares.map((fam: Familiar, i: number) => {
                             return `${i + 1}. ${fam.parentesco}  (${fam.nombre === undefined ? '' : fam.nombre})`
                         })}
                         label="Tutor"
